@@ -1,7 +1,8 @@
 package com.server.venus.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.server.venus.entity.UserDetailsImpl;
+import com.server.venus.vo.RegisterUserVO;
+import com.server.venus.vo.VenusUserVO;
 
 import java.util.List;
 
@@ -17,5 +18,9 @@ import java.util.List;
  */
 public interface IVenusUserMapper {
 
-    List<UserDetailsImpl> getPageUser(Page<UserDetailsImpl> userDetailsPage, UserDetailsImpl userDetails);
+    void addUser(RegisterUserVO registerUserVO);
+
+    List<VenusUserVO> getPageUser(Page<VenusUserVO> venusUserPage, VenusUserVO venusUser);
+
+    VenusUserVO getUserByName(String username);
 }

@@ -1,8 +1,11 @@
 package com.server.venus.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.server.venus.entity.UserDetailsImpl;
+import com.server.venus.enums.ResultEnum;
 import com.server.venus.utils.Constants;
 import com.server.venus.utils.TokenUtils;
+import com.server.venus.vo.ResultVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,11 +40,11 @@ public class CustomOncePerRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String header = httpServletRequest.getHeader(Constants.TOKEN_HEADER);
+        String header = request.getHeader(Constants.TOKEN_HEADER);
         if (StringUtils.isBlank(header)) {
-            header = httpServletRequest.getParameter(Constants.TOKEN);
+            header = request.getParameter(Constants.TOKEN);
         }
         if (header != null && header.startsWith(Constants.TOKEN_PREFIX)) {
             String token = header.substring(Constants.TOKEN_PREFIX.length());
@@ -52,11 +55,11 @@ public class CustomOncePerRequestFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities()
                     );
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        filterChain.doFilter(request, response);
     }
 }

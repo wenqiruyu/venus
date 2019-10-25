@@ -2,7 +2,8 @@ package com.server.venus.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.server.venus.entity.UserDetailsImpl;
+import com.server.venus.vo.RegisterUserVO;
+import com.server.venus.vo.VenusUserVO;
 import com.server.venus.mapper.IVenusUserMapper;
 import com.server.venus.service.IVenusUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,23 @@ public class VenusUserServiceImpl implements IVenusUserService {
     private IVenusUserMapper venusUserMapper;
 
     @Override
-    public IPage<UserDetailsImpl> getAllUser(UserDetailsImpl userDetails, int page, int pageSize) {
+    public void addUser(RegisterUserVO registerUserVO) {
 
-        Page<UserDetailsImpl> userDetailsPage = new Page<>(page, pageSize);
-        userDetailsPage.setRecords(venusUserMapper.getPageUser(userDetailsPage, userDetails));
-        return userDetailsPage;
+        venusUserMapper.addUser(registerUserVO);
+    }
+
+    @Override
+    public IPage<VenusUserVO> getAllUser(VenusUserVO venusUser, int page, int pageSize) {
+
+        Page<VenusUserVO> venusUserPage = new Page<>(page, pageSize);
+        venusUserPage.setRecords(venusUserMapper.getPageUser(venusUserPage, venusUser));
+        return venusUserPage;
+    }
+
+    @Override
+    public VenusUserVO getUserByName(String username) {
+
+        VenusUserVO userByName = venusUserMapper.getUserByName(username);
+        return userByName;
     }
 }

@@ -1,8 +1,8 @@
 package com.server.venus.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.server.venus.entity.UserDetailsImpl;
+import com.server.venus.vo.RegisterUserVO;
+import com.server.venus.vo.VenusUserVO;
 
 /**
  * 项目名称：venus
@@ -16,5 +16,9 @@ import com.server.venus.entity.UserDetailsImpl;
  */
 public interface IVenusUserService {
 
-    IPage<UserDetailsImpl> getAllUser(UserDetailsImpl userDetails, int page, int pageSize);
+    void addUser(RegisterUserVO registerUserVO);
+
+    IPage<VenusUserVO> getAllUser(VenusUserVO venusUser, int page, int pageSize);
+
+    VenusUserVO getUserByName(String username);
 }

@@ -4,6 +4,8 @@ import com.server.venus.entity.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -18,6 +20,9 @@ import java.util.Date;
  * 修改备注：后续使用了spring security需要进行更改，使用UserDetail
  */
 public class TokenUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(TokenUtils.class);
+
 
     /**
      * 获取Token
@@ -51,8 +56,16 @@ public class TokenUtils {
      * @date 2019/9/26
      */
     public static String getUsernameByToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(Constants.SECRET).parseClaimsJws(token).getBody();
-        return claims.getSubject();
+
+        try {
+            Claims claims = Jwts.parser().setSigningKey(Constants.SECRET).parseClaimsJws(token).getBody();
+            if (claims != null) {
+                return claims.getSubject();
+            }
+        } catch (Exception e) {
+            logger.error("TokenUtils getUsernameByToken error!", e);
+        }
+        return null;
     }
 
     /**
@@ -64,8 +77,14 @@ public class TokenUtils {
      * @date 2019/9/26
      */
     public static boolean isExpiration(String token) {
-        Claims claims = Jwts.parser().setSigningKey(Constants.SECRET).parseClaimsJws(token).getBody();
-        return claims.getExpiration().after(new Date());
+
+        try {
+            Claims claims = Jwts.parser().setSigningKey(Constants.SECRET).parseClaimsJws(token).getBody();
+            return claims.getExpiration().after(new Date());
+        } catch (Exception e) {
+            logger.error("TokenUtils isExpiration error!", e);
+            return false;
+        }
     }
 
     /**
@@ -78,6 +97,7 @@ public class TokenUtils {
      * @date 2019/9/26
      */
     public static boolean validateToken(String username, String token) {
+
         String usernameByToken = getUsernameByToken(token);
         boolean result = usernameByToken.equals(username);
         return result;
@@ -94,18 +114,39 @@ public class TokenUtils {
      * @date 2019/9/26
      */
     public static boolean validateUser(String username, String token, UserDetailsImpl user) {
+
         boolean result = username.equals(user.getUsername()) && isExpiration(token);
         return result;
     }
 
+    /**
+     * 刷新令牌
+     *
+     * @param token
+     * @return java.lang.String
+     * @author yingx
+     * @date 2019/10/25
+     */
+    public static String refreshToken(String token) {
+
+        String username = getUsernameByToken(token);
+        return getToken(token, false);
+    }
+
     private static Claims getTokenBody(String token) {
-        return Jwts.parser()
-                .setSigningKey(Constants.SECRET)
-                .parseClaimsJws(token)
-                .getBody();
+
+        Claims claims;
+        try {
+            claims = Jwts.parser().setSigningKey(Constants.SECRET).parseClaimsJws(token).getBody();
+        } catch (Exception e) {
+            logger.error("TokenUtils getTokenBody error!", e);
+            claims = null;
+        }
+        return claims;
     }
 
     public static String getUserRole(String token) {
+
         return (String) getTokenBody(token).get("rol");
     }
 }
