@@ -2,7 +2,7 @@ package com.server.venus.filter;
 
 import com.server.venus.entity.Menu;
 import com.server.venus.entity.UserRole;
-import com.server.venus.service.IMenuService;
+import com.server.venus.service.IVenusMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -28,7 +28,7 @@ import java.util.List;
 public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
 
     @Autowired
-    private IMenuService menuService;
+    private IVenusMenuService menuService;
 
     // 用于进行路径的匹配规则
     AntPathMatcher antPathMatcher = new AntPathMatcher();

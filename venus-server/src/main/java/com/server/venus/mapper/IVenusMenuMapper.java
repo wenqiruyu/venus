@@ -1,4 +1,4 @@
-package com.server.venus.service;
+package com.server.venus.mapper;
 
 import com.server.venus.entity.Menu;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * 项目名称：learning-blog
- * 类名称：IMenuService
+ * 类名称：IVenusMenuMapper
  * 类描述：TODO
  * 创建人：yingx
  * 创建时间： 2019/10/15
@@ -14,7 +14,7 @@ import java.util.List;
  * 修改时间： 2019/10/15
  * 修改备注：
  */
-public interface IMenuService {
+public interface IVenusMenuMapper {
 
     List<Menu> getAllMenu();
 }
