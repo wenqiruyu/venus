@@ -1,5 +1,7 @@
 package com.server.venus.vo;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.List;
 
 /**
@@ -17,46 +19,55 @@ public class RegisterUserVO {
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名", required = true)
     private String name;
 
     /**
      * 手机号
      */
+    @ApiModelProperty(value = "手机号", required = true)
     private String phone;
 
     /**
      * 家庭座机
      */
+    @ApiModelProperty(value = "家庭座机", required = true)
     private String telePhone;
 
     /**
      * 家庭住址
      */
+    @ApiModelProperty(value = "家庭住址", required = true)
     private String address;
 
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
     /**
      * 密码
      */
+    @ApiModelProperty(value = "密码", required = true)
     private String password;
 
     /**
      * 用户权限
      */
+    @ApiModelProperty(value = "用户权限", required = true)
     private List<VenusUserRoleVO> roles;
 
     /**
      * 用户头像
      */
+    @ApiModelProperty(value = "用户头像", required = true)
     private String userFace;
 
     /**
      * 备注
      */
+    @ApiModelProperty(value = "备注", required = true)
     private String remark;
 
     public String getName() {

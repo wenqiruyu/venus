@@ -26,11 +26,10 @@ import java.io.IOException;
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         String jwtToken = TokenUtils.getToken(userDetails.getUsername(), false);
-
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.createBySuccess(jwtToken)));
+        response.getWriter().write(JSON.toJSONString(ResultVO.success(jwtToken)));
     }
 }

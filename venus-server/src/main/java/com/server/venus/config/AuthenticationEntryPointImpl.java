@@ -26,7 +26,7 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.createBySuccess(ResultEnum.USER_NEED_AUTHORITIES)));
+    public void commence(HttpServletRequest Request, HttpServletResponse Response, AuthenticationException e) throws IOException, ServletException {
+        Response.getWriter().write(JSON.toJSONString(ResultVO.fail(ResultEnum.USER_NEED_AUTHORITIES)));
     }
 }

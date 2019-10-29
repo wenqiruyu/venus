@@ -1,7 +1,10 @@
 package com.server.venus.service.impl;
 
 import com.server.venus.entity.Menu;
+import com.server.venus.mapper.IVenusMenuMapper;
 import com.server.venus.service.IVenusMenuService;
+import com.server.venus.vo.VenusUserVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +22,18 @@ import java.util.List;
 @Service
 public class VenusMenuServiceImpl implements IVenusMenuService {
 
+    @Autowired
+    private IVenusMenuMapper venusMenuMapper;
+
     @Override
     public List<Menu> getAllMenu() {
-        return null;
+
+        return venusMenuMapper.getAllMenu();
+    }
+
+    @Override
+    public List<Menu> getMenuByUser(VenusUserVO venusUserVO) {
+
+        return venusMenuMapper.getMenuByUser(venusUserVO);
     }
 }

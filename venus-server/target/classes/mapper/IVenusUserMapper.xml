@@ -9,13 +9,6 @@
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="userFace" jdbcType="VARCHAR" property="userFace" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
-
-        <collection property="roles" resultMap="rolesMap" />
-    </resultMap>
-
-    <resultMap id="rolesMap" type="com.server.venus.vo.VenusUserRoleVO">
-        <result column="name" jdbcType="VARCHAR" property="roleName"/>
-        <result column="nameZh" jdbcType="VARCHAR" property="nameZh"/>
     </resultMap>
 
     <sql id="permissionUser">
@@ -32,6 +25,11 @@
     </sql>
 
     <select id="getPageUser" resultMap="userResultMap">
+        SELECT <include refid="permissionUser" />
+        FROM permission_user
+    </select>
+
+    <!--<select id="getPageUser" resultMap="userResultMap">
         SELECT r.name as roleName, r.nameZh, <include refid="permissionUserList" />
         FROM role r, (
             SELECT <include refid="userRole" />, permission.<include refid="permissionUser" />
@@ -42,9 +40,15 @@
             WHERE user_id = permission.id
         ) userRole
         WHERE userRole.role_id = r.id
-    </select>
+    </select>-->
 
     <select id="getUserByName" resultMap="userResultMap">
+        SELECT <include refid="permissionUser" />
+        FROM permission_user
+        WHERE username = #{username}
+    </select>
+
+    <!--<select id="getUserByName" resultMap="userResultMap">
         SELECT r.name as roleName, r.nameZh, <include refid="permissionUserList" />
         FROM role r, (
             SELECT <include refid="userRole" />, permission.<include refid="permissionUser" />
@@ -56,7 +60,7 @@
             WHERE user_id = permission.id
         ) userRole
         WHERE userRole.role_id = r.id
-    </select>
+    </select>-->
 
     <insert id="addPermissionUser">
         insert into permission_user(username, password)

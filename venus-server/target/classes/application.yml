@@ -21,3 +21,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:10000/eureka/
+
+swagger2:
+  enable: true

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.server.venus.mapper.IVenusMenuMapper">
-    <resultMap id="menuResultMap" type="com.server.venus.entity.Menu">
+    <resultMap id="menuResultMap" type="com.server.venus.vo.VenusMenuVO">
         <result column="url" jdbcType="VARCHAR" property="url" />
         <result column="path" jdbcType="VARCHAR" property="path" />
         <result column="component" jdbcType="VARCHAR" property="component" />
@@ -14,12 +14,16 @@
         <collection property="roles" resultMap="rolesMap" />
     </resultMap>
 
-    <resultMap id="rolesMap" type="com.server.venus.entity.UserRole">
+    <resultMap id="rolesMap" type="com.server.venus.vo.VenusUserRoleVO">
         <result column="name" jdbcType="VARCHAR" property="roleName"/>
         <result column="nameZh" jdbcType="VARCHAR" property="nameZh"/>
     </resultMap>
 
     <sql id="menuList">
+        m.url, m.path, m.component, m.name, m.iconCls, m.keepAlive, m.requireAuth, m.parentId
+    </sql>
+
+    <sql id="menuRoleList">
         mr.url, mr.path, mr.component, mr.name, mr.iconCls, mr.keepAlive, mr.requireAuth, mr.parentId
     </sql>
 
@@ -28,7 +32,7 @@
     </sql>
 
     <select id="getAllMenu" resultMap="menuResultMap">
-        SELECT role.name, role.nameZh, <include refid="menuList" />
+        SELECT <include refid="menuRoleList" />,role.name, role.nameZh
         FROM role, (
             SELECT menu.*,menu_role.role_id
             FROM menu_role,menu
@@ -37,4 +41,31 @@
         WHERE mr.role_id = role.id
     </select>
 
+    <select id="getMenuByUser" resultMap="menuResultMap">
+        SELECT <include refid="menuList" />
+        FROM (
+            SELECT umr.menu_id
+            FROM permission_user pu, (
+                SELECT ur.role_id, ur.user_id, mr.menu_id
+                FROM user_role ur
+                LEFT JOIN menu_role mr
+                ON ur.role_id = mr.role_id
+                ) umr
+            <where>
+                <if test="name != null and name != ''">
+                    pu.name = #{name}
+                </if>
+                <if test="phone != null and phone != ''">
+                    pu.phone = #{phone}
+                </if>
+                <if test="username != null and username != ''">
+                    pu.username = #{username}
+                </if>
+            </where>
+            AND pu.id = umr.user_id
+            GROUP BY umr.menu_id ASC
+        ) a
+        LEFT JOIN menu m
+        ON m.id = a.menu_id
+    </select>
 </mapper>

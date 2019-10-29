@@ -24,8 +24,9 @@ import java.io.IOException;
  */
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
+
     @Override
-    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.createBySuccess(ResultEnum.USER_NO_ACCESS)));
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
+        response.getWriter().write(JSON.toJSONString(ResultVO.fail(ResultEnum.USER_NO_ACCESS)));
     }
 }

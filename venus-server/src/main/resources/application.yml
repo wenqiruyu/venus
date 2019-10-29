@@ -8,9 +8,9 @@ spring:
     name: venus-server
   devtools:
     restart:
-      enabled: true  #ÉèÖÃ¿ªÆôÈÈ²¿Êð
+      enabled: true  #ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½È²ï¿½ï¿½ï¿½
   freemarker:
-    cache: false    #Ò³Ãæ²»¼ÓÔØ»º´æ£¬ÐÞ¸Ä¼´Ê±ÉúÐ§
+    cache: false    #Ò³ï¿½æ²»ï¿½ï¿½ï¿½Ø»ï¿½ï¿½æ£¬ï¿½Þ¸Ä¼ï¿½Ê±ï¿½ï¿½Ð§
   datasource:
     url: jdbc:mysql://localhost/permission?characterEncoding=utf-8&useSSl=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,3 +21,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:10000/eureka/
+
+swagger2:
+  enable: true

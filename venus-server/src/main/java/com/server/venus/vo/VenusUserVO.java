@@ -1,8 +1,6 @@
 package com.server.venus.vo;
 
-import com.server.venus.entity.UserRole;
-
-import java.util.List;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 项目名称：venus
@@ -19,41 +17,43 @@ public class VenusUserVO {
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名", required = true)
     private String name;
 
     /**
      * 手机号
      */
+    @ApiModelProperty(value = "手机号", required = true)
     private String phone;
 
     /**
      * 家庭座机
      */
+    @ApiModelProperty(value = "家庭座机", required = true)
     private String telePhone;
 
     /**
      * 家庭住址
      */
+    @ApiModelProperty(value = "家庭住址", required = true)
     private String address;
 
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
-
-    /**
-     * 用户权限
-     */
-    private List<VenusUserRoleVO> roles;
 
     /**
      * 用户头像
      */
+    @ApiModelProperty(value = "用户头像", required = true)
     private String userFace;
 
     /**
      * 备注
      */
+    @ApiModelProperty(value = "备注", required = true)
     private String remark;
 
     public String getName() {
@@ -96,14 +96,6 @@ public class VenusUserVO {
         this.username = username;
     }
 
-    public List<VenusUserRoleVO> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<VenusUserRoleVO> roles) {
-        this.roles = roles;
-    }
-
     public String getUserFace() {
         return userFace;
     }
@@ -128,7 +120,6 @@ public class VenusUserVO {
                 ", telePhone='" + telePhone + '\'' +
                 ", address='" + address + '\'' +
                 ", username='" + username + '\'' +
-                ", roles=" + roles +
                 ", userFace='" + userFace + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';

@@ -1,5 +1,7 @@
 package com.server.venus.vo;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 项目名称：venus
  * 类名称：VenusUserRoleVO
@@ -15,11 +17,13 @@ public class VenusUserRoleVO {
     /**
      * 用户权限名
      */
+    @ApiModelProperty(value = "用户权限名", required = true)
     private String roleName;
 
     /**
      * 权限中文名
      */
+    @ApiModelProperty(value = "权限中文名", required = true)
     private String nameZh;
 
     public String getRoleName() {

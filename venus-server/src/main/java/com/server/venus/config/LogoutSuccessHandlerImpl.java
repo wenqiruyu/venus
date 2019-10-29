@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * 项目名称：venus
  * 类名称：LogoutSuccessHandlerImpl
- * 类描述：用户未登录时返回给前端的数据
+ * 类描述：用户退出登录时返回给前端的数据
  * 创建人：yingx
  * 创建时间： 2019/10/24
  * 修改人：yingx
@@ -24,9 +24,11 @@ import java.io.IOException;
  */
 @Component
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
+
     @Override
-    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        httpServletResponse.getWriter().write(JSON.toJSONString(ResultVO.createBySuccess(ResultEnum.USER_LOGOUT_SUCCESS)));
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+        response.getWriter().write(JSON.toJSONString(ResultVO.success(ResultEnum.USER_LOGOUT_SUCCESS)));
     }
 
 }

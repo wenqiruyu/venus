@@ -29,11 +29,11 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
     private ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
 
-        ResultVO resultVo = ResultVO.createByErrorMessage("用户登录失败!");
-        httpServletResponse.setContentType("application/json;charset=UTF-8");
-        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(resultVo));
+        ResultVO resultVo = ResultVO.fail("用户登录失败!");
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(objectMapper.writeValueAsString(resultVo));
     }
 
 }

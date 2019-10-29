@@ -62,7 +62,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         UserDetails userDetail = (UserDetails)authResult.getPrincipal();
         String token = TokenUtils.getToken(userDetail.getUsername(), false);
         response.setHeader("token", Constants.TOKEN_PREFIX + token);
-        response.getWriter().write(JSON.toJSONString(ResultVO.createBySuccess(Constants.TOKEN_PREFIX + token)));
+        response.getWriter().write(JSON.toJSONString(ResultVO.success(Constants.TOKEN_PREFIX + token)));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.server.venus.service;
 
 import com.server.venus.entity.Menu;
+import com.server.venus.vo.VenusUserVO;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ import java.util.List;
 public interface IVenusMenuService {
 
     List<Menu> getAllMenu();
+
+    List<Menu> getMenuByUser(VenusUserVO venusUserVO);
 }
