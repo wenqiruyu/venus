@@ -15,10 +15,16 @@ import io.swagger.annotations.ApiModelProperty;
 public class VenusUserVO {
 
     /**
+     * 用户id
+     */
+    @ApiModelProperty(value = "用户id", required = true)
+    private Long id;
+
+    /**
      * 用户名
      */
     @ApiModelProperty(value = "用户名", required = true)
-    private String name;
+    private String username;
 
     /**
      * 手机号
@@ -39,12 +45,6 @@ public class VenusUserVO {
     private String address;
 
     /**
-     * 用户名
-     */
-    @ApiModelProperty(value = "用户名", required = true)
-    private String username;
-
-    /**
      * 用户头像
      */
     @ApiModelProperty(value = "用户头像", required = true)
@@ -56,12 +56,12 @@ public class VenusUserVO {
     @ApiModelProperty(value = "备注", required = true)
     private String remark;
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPhone() {
@@ -115,11 +115,11 @@ public class VenusUserVO {
     @Override
     public String toString() {
         return "VenusUserVO{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", phone='" + phone + '\'' +
                 ", telePhone='" + telePhone + '\'' +
                 ", address='" + address + '\'' +
-                ", username='" + username + '\'' +
                 ", userFace='" + userFace + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';

@@ -26,9 +26,9 @@ public class VenusUserServiceImpl implements IVenusUserService {
     private IVenusUserMapper venusUserMapper;
 
     @Override
-    public void addUser(RegisterUserVO registerUserVO) {
+    public void addVenusUser(RegisterUserVO registerUserVO) {
 
-        venusUserMapper.addUser(registerUserVO);
+        venusUserMapper.addVenusUser(registerUserVO);
     }
 
     @Override
@@ -44,5 +44,11 @@ public class VenusUserServiceImpl implements IVenusUserService {
 
         VenusUserVO userByName = venusUserMapper.getUserByName(username);
         return userByName;
+    }
+
+    @Override
+    public void delUserAccount(String username) {
+
+        venusUserMapper.delUserAccount(username);
     }
 }

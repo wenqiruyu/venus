@@ -12,7 +12,7 @@ spring:
   freemarker:
     cache: false    #ҳ�治���ػ��棬�޸ļ�ʱ��Ч
   datasource:
-    url: jdbc:mysql://localhost/permission?characterEncoding=utf-8&useSSl=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost/venus?characterEncoding=utf-8&useSSl=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root

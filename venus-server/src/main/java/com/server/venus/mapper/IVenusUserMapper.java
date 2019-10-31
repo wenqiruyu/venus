@@ -18,9 +18,11 @@ import java.util.List;
  */
 public interface IVenusUserMapper {
 
-    void addUser(RegisterUserVO registerUserVO);
+    void addVenusUser(RegisterUserVO registerUserVO);
 
     List<VenusUserVO> getPageUser(Page<VenusUserVO> venusUserPage, VenusUserVO venusUser);
 
     VenusUserVO getUserByName(String username);
+
+    void delUserAccount(String username);
 }

@@ -1,16 +1,21 @@
 package com.server.venus.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.server.venus.enums.ResultCodeEnum;
 import com.server.venus.service.IVenusUserService;
 import com.server.venus.vo.LoginUserVO;
 import com.server.venus.vo.RegisterUserVO;
 import com.server.venus.vo.ResultVO;
 import com.server.venus.vo.VenusUserVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,10 +50,22 @@ public class VenusUserController {
      */
     @PostMapping("/register")
     @ApiOperation(value = "用户注册", notes = "开放用户注册功能", position = 2)
-    public ResultVO register(RegisterUserVO registerUserVO) {
+    public ResultVO register(@RequestBody RegisterUserVO registerUserVO) {
 
+        logger.info("VenusUserController register start ... Username:{}, Password:{}",
+                registerUserVO.getUsername(), StringUtils.isBlank(registerUserVO.getPassword()) ? null : "******");
+        if (registerUserVO == null || StringUtils.isBlank(registerUserVO.getUsername()) || StringUtils.isBlank(registerUserVO.getPassword())) {
+            return ResultVO.fail(ResultCodeEnum.PARAMS_ERROR_NULL);
+        }
+        // 用户注册需将用户密码进行加密
+        registerUserVO.setPassword(new BCryptPasswordEncoder().encode(registerUserVO.getPassword()));
         try {
-            venusUserService.addUser(registerUserVO);
+            venusUserService.addVenusUser(registerUserVO);
+            // 注册成功，为其分配默认角色
+            VenusUserVO userByName = venusUserService.getUserByName(registerUserVO.getUsername());
+            if (userByName == null) {
+
+            }
             return ResultVO.success();
         } catch (Exception e) {
             logger.error("VenusUserController register error!", e);
@@ -83,6 +100,10 @@ public class VenusUserController {
      */
     @PostMapping("/getAllUser/{page}/{pageSize}")
     @ApiOperation(value = "获取全部户用信息", notes = "分页查询全部用户信息", position = 2)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "每页个数", required = true, dataType = "int")
+    })
     public ResultVO getAllUser(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize) {
 
         logger.info("VenusUserController getAllUser start ...page:{},pageSize:{}", page, pageSize);
@@ -108,6 +129,7 @@ public class VenusUserController {
      */
     @PostMapping("getUser/name")
     @ApiOperation(value = "查询用户信息（用户名）", notes = "根据用户名查询用户信息", position = 2)
+    @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String")
     public ResultVO getUserByName(@RequestParam String username) {
 
         logger.info("VenusUserController getUserByName start ...username:{}", username);
@@ -120,5 +142,25 @@ public class VenusUserController {
         }
         logger.info("VenusUserController getUserByName end ...result:{}", userByName);
         return ResultVO.success(userByName);
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation(value = "用户注销登录", tags = "用户进行账号注销操作", position = 2)
+    public ResultVO logout() {
+
+        return null;
+    }
+
+    @DeleteMapping("/delete")
+    @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String")
+    public ResultVO delAccount(@RequestParam String username) {
+
+        logger.info("VenusUserController getUserByName delAccount ... Username:{}", username);
+        if (StringUtils.isBlank(username)) {
+            return ResultVO.fail(ResultCodeEnum.PARAMS_ERROR_NULL);
+        }
+        // 需将用户表相关用户和权限删除
+        logger.info("VenusUserController getUserByName end");
+        return ResultVO.success();
     }
 }

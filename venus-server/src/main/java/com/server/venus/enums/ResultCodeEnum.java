@@ -19,6 +19,7 @@ public enum ResultCodeEnum {
     SYS_ERROR("402", "系统错误"),
     PARAMS_ERROR("403", "参数错误 "),
     PARAMS_ERROR_FORMAT("403-001", "参数传递方式不正确, 请使用application/json传递参数"),
+    PARAMS_ERROR_NULL("403-002", "参数为空"),
     //业务级错误代码定义 ，1开头代表用户账号错误,长度统一为4位
     UNKNOWN_USER("1001", "账号不存在或密码错误"),
     NAME_OR_PASS_EMPTY("1002", "账号或密码不能为空"),

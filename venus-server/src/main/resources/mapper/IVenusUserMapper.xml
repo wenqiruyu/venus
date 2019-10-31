@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.server.venus.mapper.IVenusUserMapper">
     <resultMap id="userResultMap" type="com.server.venus.vo.VenusUserVO">
-        <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="phone" jdbcType="VARCHAR" property="phone" />
-        <result column="telePhone" jdbcType="VARCHAR" property="telePhone" />
-        <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="username" jdbcType="VARCHAR" property="username" />
-        <result column="userFace" jdbcType="VARCHAR" property="userFace" />
-        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="telePhone" jdbcType="VARCHAR" property="telePhone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="userFace" jdbcType="VARCHAR" property="userFace"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
     </resultMap>
 
-    <sql id="permissionUser">
-        id, name, phone, telePhone, address, username, password, userFace, remark
+    <sql id="venusUser">
+        id, phone, telePhone, address, username, password, userFace, remark
     </sql>
 
-    <sql id="permissionUserList">
-        userRole.id, userRole.name, userRole.phone, userRole.telePhone, userRole.address,
+    <sql id="venusUserList">
+        userRole.id userRole.phone, userRole.telePhone, userRole.address,
         userRole.username, userRole.userFace, userRole.remark
     </sql>
 
@@ -25,8 +25,9 @@
     </sql>
 
     <select id="getPageUser" resultMap="userResultMap">
-        SELECT <include refid="permissionUser" />
-        FROM permission_user
+        SELECT
+        <include refid="venusUser"/>
+        FROM venus_user
     </select>
 
     <!--<select id="getPageUser" resultMap="userResultMap">
@@ -43,8 +44,9 @@
     </select>-->
 
     <select id="getUserByName" resultMap="userResultMap">
-        SELECT <include refid="permissionUser" />
-        FROM permission_user
+        SELECT
+        <include refid="venusUser"/>
+        FROM venus_user
         WHERE username = #{username}
     </select>
 
@@ -62,8 +64,8 @@
         WHERE userRole.role_id = r.id
     </select>-->
 
-    <insert id="addPermissionUser">
-        insert into permission_user(username, password)
+    <insert id="addVenusUser">
+        insert into venus_user(username, password)
         values(#{username}, #{password})
     </insert>
 

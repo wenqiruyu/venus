@@ -25,7 +25,12 @@ public class UserDetailsImpl implements UserDetails {
     /**
      * 用户名
      */
-    private String name;
+    private String username;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 手机号
@@ -41,16 +46,6 @@ public class UserDetailsImpl implements UserDetails {
      * 家庭住址
      */
     private String address;
-
-    /**
-     * 用户名
-     */
-    private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
 
     /**
      * 用户权限
@@ -73,14 +68,6 @@ public class UserDetailsImpl implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPhone() {
@@ -183,7 +170,6 @@ public class UserDetailsImpl implements UserDetails {
     public String toString() {
         return "UserDetailsImpl{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", telePhone='" + telePhone + '\'' +
                 ", address='" + address + '\'' +

@@ -16,9 +16,11 @@ import com.server.venus.vo.VenusUserVO;
  */
 public interface IVenusUserService {
 
-    void addUser(RegisterUserVO registerUserVO);
+    void addVenusUser(RegisterUserVO registerUserVO);
 
     IPage<VenusUserVO> getAllUser(VenusUserVO venusUser, int page, int pageSize);
 
     VenusUserVO getUserByName(String username);
+
+    void delUserAccount(String username);
 }

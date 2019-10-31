@@ -31,27 +31,35 @@ public class VenusMenuVO {
     /**
      * 成分
      */
+    @ApiModelProperty(value = "成分", required = true)
     private String component;
 
     /**
      * 菜单名称
      */
+    @ApiModelProperty(value = "菜单名称", required = true)
     private String name;
 
     /**
      * 菜单icon
      */
+    @ApiModelProperty(value = "菜单icon", required = true)
     private String iconCls;
 
     private Integer keepAlive;
 
     private Integer requireAuth;
 
+    /**
+     * 父菜单id
+     */
+    @ApiModelProperty(value = "父菜单id", required = true)
     private Long parentId;
 
     /**
      * 菜单允许权限
      */
+    @ApiModelProperty(value = "菜单允许权限", required = true)
     private List<VenusUserRoleVO> roles;
 
     public String getUrl() {

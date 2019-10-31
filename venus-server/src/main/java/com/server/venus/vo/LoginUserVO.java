@@ -1,5 +1,7 @@
 package com.server.venus.vo;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 项目名称：venus
  * 类名称：LoginUserVO
@@ -15,11 +17,13 @@ public class LoginUserVO {
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
     /**
      * 密码
      */
+    @ApiModelProperty(value = "密码", required = true)
     private String password;
 
     public String getUsername() {
